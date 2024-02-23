@@ -26,13 +26,15 @@ $ `mv <extracted_compiler> /opt/compiler_explorer/`
 
 Many other compilers are available (e.g. `gcc-13.1.0.tar.xz`). A complete list can be obtained as
 described [here](https://github.com/compiler-explorer/infra/blob/main/docs/installing_compilers.md).
+If the system doesn't satisfy the GLIBC requirement of the compiler (calling the compiler will
+fail), compiling in a docker container might be the best option.
 
 Build binary with complete path to the downloaded compiler and either link to respective standard
 library, or set library path manually when running the program:
 
 ```bash
 # linking to lib
-$ /opt/compiler_explorer/gcc-13.1.0/bin/g++ -std=c++23 -L /opt/compiler_explorer/gcc-13.1.0/lib64 main.cpp -o main.out && ./main.out
+$ /opt/compiler_explorer/gcc-13.1.0/bin/g++ -std=c++23 -L /opt/compiler_explorer/gcc-13.1.0/lib64 -static main.cpp -o main.out && ./main.out
 # set library manually
 $ /opt/compiler_explorer/gcc-13.1.0/bin/g++ -std=c++23 main.cpp -o main.out && export LD_LIBRARY_PATH=/opt/compiler_explorer/gcc-13.1.0/lib64/ && ./main.out
 ```
